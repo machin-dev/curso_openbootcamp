@@ -3,28 +3,27 @@ import PropTypes from 'prop-types';
 import 'react-icons/fc'
 
 import { Task } from "../../../models/task.class";
-import { FcAbout, FcCancel, FcCheckmark, FcHome } from "react-icons/fc";
+import { FcAbout, FcApproval,  FcSettings } from "react-icons/fc";
 
 
 const TaskComponent=({task})=>{
     return (
         <div>
-           <div class="card position-relative" style={{width:'18rem'}}>
-                 <div class="card-body">
-                     <h5 class="card-title"><FcAbout /> {task.name}</h5>
-                     <h6 class="card-subtitle mb-2 text-muted">
+           <div className="card position-relative" style={{width:'18rem'}}>
+                 <div className="card-body">
+                     <h5 className="card-title shadow-sm p-2"><FcAbout /> {task.name}</h5>
+                     <h6 className="card-subtitle mb-2 text-muted">
                         {task.completado ? (
-                            <>'COMPLETADO' <FcCheckmark /></>
+                            <><FcApproval />'COMPLETADO' </>
                         ):(
-                           <><FcCancel /> 'NO COMPLETADO' </>
+                           <><FcSettings /> 'NO COMPLETADO' </>
                         )}
-
                      </h6>
-                     <p class="card-text">{task.descripcion}</p>                     
+                     <p className="card-text">{task.descripcion}</p>                     
                  </div>
-                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                       {task.nivel}
-                     <span class="visually-hidden">unread messages</span>
+                     <span className="visually-hidden">unread messages</span>
                 </span>
             </div>
         </div>

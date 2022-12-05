@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from 'prop-types';
 import 'react-icons/fc'
 
-import { Task } from "../../../models/task.class";
+import { Task } from "../../models/task.class";
 import { FcAbout, FcApproval,  FcSettings } from "react-icons/fc";
 
 
 const TaskComponent=({task})=>{
+    useEffect(()=>{
+        console.log('tarea creada');
+        return()=>{
+            console.log(`tarea ${task.name} desmontada`);
+        }
+    },[task])
     return (
         <div>
            <div className="card position-relative" style={{width:'18rem'}}>

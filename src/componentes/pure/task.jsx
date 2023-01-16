@@ -1,18 +1,16 @@
 import React, { useEffect } from "react";
 import PropTypes from 'prop-types';
-import 'react-icons/fc'
+import 'react-icons/fc';
+
 
 import { Task } from "../../models/task.class";
-import { FcAbout, FcApproval,  FcFullTrash,  FcOk,  FcSettings } from "react-icons/fc";
+import { FcAbout,  FcFullTrash,  FcOk,  FcSettings } from "react-icons/fc";
 import { Level } from "../../models/level.enum";
 
 
-const TaskComponent=({task})=>{
+const TaskComponent=({task, completar, del})=>{
     useEffect(()=>{
-        console.log('tarea creada');
-        return()=>{
-            console.log(`tarea ${task.name} desmontada`);
-        }
+        console.log('tarea creada');                
     },[task]);
 
     function taskLevelBadge (){
@@ -24,32 +22,42 @@ const TaskComponent=({task})=>{
           }
     }
     return (
-        <div>
-           <div className="card position-relative m-2" style={{width:'18rem'}}>
-                 <div className="card-body">
-                     <h5 className="card-title shadow-sm p-2"><FcAbout /> {task.name}</h5>
-                     <h6 className="card-subtitle mb-2 text-muted">
+      
+           <div className="card  m-2" style={{width:'18rem'}}>
+                 <div className="card-body ">
+                     <h5 className="card-title bg-dark text-light p-2 position-relative"><FcAbout />
+                      {task.name}
+                      <span className={taskLevelBadge()}>
+                         {task.nivel }  
+                      </span>
+                </h5>
+                     <button 
+                        className={task.completado ? 'btn btn-success mb-2 text-white':
+                                                     'btn btn-warning mb-2 text-light' }
+                        title="click para cambiar estado"
+                         onClick={()=>completar(task)}>
                         {task.completado ? (
-                           <><FcOk /> COMPLETADO </>
+                           <><FcOk /> FINALIZADO </>
                         ):(
-                           <><FcSettings /> NO COMPLETADO </>
-                        )}
-                        <FcFullTrash className="m-2 ms-4" title="Eliminar"/>
-                     </h6>
-                     <p className="card-text">{task.descripcion}</p> 
-                                        
-                 </div>
-                 <span className={taskLevelBadge()}>
-                      {task.nivel }                      
-                     <span className="visually-hidden">unread messages</span>
-                </span>
+                           <><FcSettings /> PENDIENTE </>
+                        )}                        
+                     </button> 
+                     <div className="row">
+                         <div className="col-9"><p className="card-text">{task.descripcion}</p></div>
+                         <div className="col-3"><button className="btn" onClick={()=>del(task)}><FcFullTrash title="Eliminar" /></button></div>
+                     </div>                    
+                                                           
+                 </div>                 
+                 
             </div>
-        </div>
+        
     );
 };
 
 TaskComponent.propTypes={
-    task: PropTypes.instanceOf(Task)
+    task: PropTypes.instanceOf(Task).isRequired,
+    completar: PropTypes.func.isRequired,
+    del: PropTypes.func.isRequired
 }; 
 
 export default TaskComponent;
